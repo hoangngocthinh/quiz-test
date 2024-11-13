@@ -1,0 +1,16 @@
+db.sqlite3
+**/venv
+**/virtualenv
+.env
+.git
+**/__pycache__
+.idea
+**/.idea
+.mypy_cache
+**/static
+**/media
+*.idea
+*.pyc
+**/database
+jwt_api_key
+jwt_api_key.pub

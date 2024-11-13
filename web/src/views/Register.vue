@@ -61,14 +61,15 @@
   
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
-	import axios from '../services/quiz.service';
 	import { toast } from 'vue3-toastify';
 	import { useRouter } from 'vue-router';
-	const router = useRouter();
+	import { useStore } from 'vuex';
 
   
   export default defineComponent({
     setup() {
+			const router = useRouter();
+			const store = useStore();
       const username = ref('');
       const first_name = ref('');
       const last_name = ref('');
@@ -83,15 +84,14 @@
 						errorMessage.value = 'Password not same.';
 						return
 					}
-          const response = await axios.post('auth/registration/', {
-            username: username.value,
+					const response = await store.dispatch('authModule/register', {
+						username: username.value,
             first_name: first_name.value,
             last_name: last_name.value,
             email: email.value,
             password: password.value,
 						password1: password1.value,
-          });
-
+					});
           errorMessage.value = null;
 					toast("Registration successful! You can now log in!", {
 						autoClose: 1000,

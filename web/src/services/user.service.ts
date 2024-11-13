@@ -1,24 +1,20 @@
-import axios from 'axios';
-import authHeader from './auth-header';
+import apiClient from "@/services/api.services";
 
-const API_URL: String = import.meta.env.VITE_API_URL
+const userService = {
+    async getMyProfile() {
+        const response = await apiClient.get('users/me/');
+        return response;
+    },
 
-class UserService {
-    getPublicContent() {
-        return axios.get(API_URL + 'all');
-    }
+    async getListUsers() {
+        const response = await apiClient.get('users/');
+        return response;
+    },
 
-    getUserBoard() {
-        return axios.get(API_URL + 'user', { headers: authHeader() });
-    }
-
-    getModeratorBoard() {
-        return axios.get(API_URL + 'mod', { headers: authHeader() });
-    }
-
-    getAdminBoard() {
-        return axios.get(API_URL + 'admin', { headers: authHeader() });
-    }
+    async getUserDetail(id: number) {
+        const response = await apiClient.get(`users/${id}`);
+        return response;
+    },
 }
 
-export default new UserService();
+export default userService;

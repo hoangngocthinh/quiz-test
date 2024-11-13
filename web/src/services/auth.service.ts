@@ -1,35 +1,26 @@
-import axios from 'axios';
+import apiClient from "@/services/api.services";
+import { ILogin, IUserRegister } from "@/types/auth";
 
-const API_URL: String = import.meta.env.VITE_API_URL
-
-
-class AuthService {
-    login(user: any) {
-        return axios
-        .post(API_URL + '/auth/token/', {
-            username: user.username,
-            password: user.password
-        })
-        .then(response => {
-            if (response.data.accessToken) {
-                localStorage.setItem('user', JSON.stringify(response.data));
-            }
-
-            return response.data;
-        });
-    }
+const authService = {
+    async login(params: ILogin): Promise<boolean> {
+        const response = await apiClient.post('auth/token/', params);
+        if (response.data) {
+            localStorage.setItem('access', response.data.access);
+            localStorage.setItem('refresh', response.data.refresh);
+            return true
+        }
+        return false
+    },
 
     logout() {
-        localStorage.removeItem('user');
-    }
+        localStorage.setItem('access', '')
+        localStorage.setItem('refresh', '')
+    },
 
-    register(user: any) {
-        return axios.post(API_URL + '/auth/registration/', {
-            username: user.username,
-            email: user.email,
-            password: user.password
-        });
+    async register(params: IUserRegister) {
+        const response = await apiClient.post('auth/registration/', params);
+        return response
     }
 }
 
-export default new AuthService();
+export default authService;

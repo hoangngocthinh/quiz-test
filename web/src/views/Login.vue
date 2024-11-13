@@ -7,7 +7,7 @@
 								class="img-fluid" alt="Sample image">
 				</div>
 				<div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-					<form class="mt-5" @submit.prevent="login">
+					<form class="mt-5" @submit.prevent="handleLogin">
 							<!-- Email input -->
 							<div class="form-outline mb-4">
 									<input type="email" id="email" class="form-control form-control-lg" autocomplete="email"
@@ -48,38 +48,32 @@
 		</div>
 	</section>
 </template>
-  
+
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import axios from '../services/quiz.service';
-import { toast } from 'vue3-toastify';
 import { useRouter } from 'vue-router';
-
+import { useStore } from 'vuex';
+import { toast } from 'vue3-toastify';
 
 export default defineComponent({
   setup() {
-		const router = useRouter();
+    const router = useRouter();
+    const store = useStore();
+
     const email = ref('');
     const password = ref('');
     const errorMessage = ref<string | null>(null);
 
-    const login = async () => {
+    const handleLogin = async () => {
       try {
-        const response = await axios.post('auth/token/', {
+        await store.dispatch('authModule/login', {
           email: email.value,
           password: password.value,
         });
-        
-        // save token to localStorage
-        const token = response.data.access;
-        localStorage.setItem('access_token', token);
 
-        // Reset error message và redirect page
+        // Reset error message and redirect page
         errorMessage.value = null;
-        console.log('Login successful:', response.data);
-				toast("Login successful!", {
-					autoClose: 1000,
-				}); // ToastOptions
+        toast("Login successful!", { autoClose: 1000 });
         router.push('/');
       } catch (error) {
         errorMessage.value = 'Login failed. Please check your credentials.';
@@ -90,7 +84,7 @@ export default defineComponent({
       email,
       password,
       errorMessage,
-      login,
+      handleLogin,
     };
   },
 });

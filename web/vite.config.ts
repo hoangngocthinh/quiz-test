@@ -8,8 +8,12 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
+      process: 'process/browser',
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
+  },
+  define: {
+    'process.env': {},
   },
   build: {
     rollupOptions: {
