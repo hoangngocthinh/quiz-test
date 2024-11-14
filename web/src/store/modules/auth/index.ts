@@ -22,9 +22,11 @@ const authModule: Module<AuthState, State> = {
       const status = await authService.login(params)
       commit("logIn", status)
     },
+
     logout( { commit }) {
       commit('logOut', false);
     },
+
     async register(params: IUserRegister) {
       return await authService.register(params)
     }

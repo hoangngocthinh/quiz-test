@@ -1,4 +1,4 @@
-export interface UserState {
+export interface IUser {
   id: string | null;
   username: string;
   email: string;
@@ -6,4 +6,8 @@ export interface UserState {
   last_name: string;
   password?: string;
   password1?: string;
+}
+
+export interface UserState {
+  user: IUser
 }

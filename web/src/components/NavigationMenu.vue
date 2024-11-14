@@ -28,6 +28,9 @@
               <router-link to="/leaderboard/123" class="nav-link">Leaderboard</router-link>
             </li>
             <li v-if="isAuthenticated">
+              <router-link to="/my-profile" class="nav-link">My Profile</router-link>
+            </li>
+            <li v-if="isAuthenticated">
               <a href="" class="nav-link" @click="logout">Logout</a>
             </li>
           </ul>
@@ -47,6 +50,7 @@
       const store = useStore();
       const router = useRouter();
       const isAuthenticated = computed(() => store.getters['authModule/isAuthenticated']);
+      const user = computed(() => store.getters['user/isAuthenticated']);
 
       const logout = () => {
         store.dispatch('authModule/logout');

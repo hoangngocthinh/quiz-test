@@ -70,7 +70,7 @@ export default defineComponent({
           email: email.value,
           password: password.value,
         });
-
+				await store.dispatch('userModule/getMyProfile');
         // Reset error message and redirect page
         errorMessage.value = null;
         toast("Login successful!", { autoClose: 1000 });
