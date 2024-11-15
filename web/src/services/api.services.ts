@@ -63,7 +63,7 @@ apiClient.interceptors.response.use(
 
     if (error.response) {
       const { status } = error.response;
-      const originalRequest: AxiosRequestConfig = error.config; // Store the original request
+      const originalRequest = error.config; // Store the original request
       if (status === 401 && originalRequest && !originalRequest._retry) {
         // Check if originalRequest exists and has not been retried
         originalRequest._retry = true;
@@ -81,8 +81,8 @@ apiClient.interceptors.response.use(
         }
       }
 
-      if (error.response.data && error.response.data.detail) {
-        toast.error(error.response.data.detail);
+      if (error.response.data && error.response.detail) {
+        toast.error(error.response.detail);
       }
     }
 
