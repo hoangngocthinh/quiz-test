@@ -27,4 +27,4 @@ COPY ./api/entrypoint.sh /usr/src/api/entrypoint.sh
 RUN chmod +x /usr/src/api/entrypoint.sh
 
 # Command to run entrypoint using entrypoint.sh script
-CMD ["/usr/src/api/entrypoint.sh"]
+CMD ["/bin/bash", "/usr/src/api/entrypoint.sh"]

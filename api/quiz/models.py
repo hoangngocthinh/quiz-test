@@ -58,7 +58,7 @@ class Participant(UuidTimeStamModel):
 
 class Answer(UuidTimeStamModel):
     participant = models.ForeignKey(
-        Quiz, related_name="participant_answer", on_delete=models.deletion.CASCADE
+        Participant, related_name="participant_answer", on_delete=models.deletion.CASCADE
     )
     question = models.ForeignKey(
         Question, related_name="question_answer", on_delete=models.deletion.CASCADE
